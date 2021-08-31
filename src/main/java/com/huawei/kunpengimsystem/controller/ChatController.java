@@ -123,7 +123,9 @@ public class ChatController {
     // 发送到 /sendMsg 时会在这里进行处理
     @MessageMapping("/sendMsg")
     public Result sendMsg(Message message) {
+        // todo sendToUser 方法需要在messageService实现
         messageService.sendToUser(message);
+        // todo createMessage 方法需要在MessageMapper.xml实现
         Integer messageId = messageService.createMessage(message);
         if (!message.getMessageType().equals("text")) {
             // 创建attachment入库
