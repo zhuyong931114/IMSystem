@@ -25,10 +25,6 @@ public class WebsocketConfig implements WebSocketMessageBrokerConfigurer {
         // {id} 用于让用户连接终端时都可以有自己的路径
         // 作为 Principal 的标识，以便实现向指定用户发送信息
 
-        registry.addEndpoint("/websocket/{id}")
-                .setHandshakeHandler(new CustomHandshakeHandler())
-                .setAllowedOriginPatterns("*")
-                .withSockJS();
 
     }
 }

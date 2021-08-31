@@ -16,9 +16,6 @@ public class CustomHandshakeHandler extends DefaultHandshakeHandler {
 
         // 获取订阅地址的最后一个/
         // 为了获取http://localhost:18080/api/websocket/${document.getElementById('conversationId').value}`中的id
-        String uri = request.getURI().toString();
-        String result = uri.substring(uri.indexOf("websocket") + 10);
-        String uid = result.substring(0, result.indexOf("/"));
-        return () -> uid;
+
     }
 }
