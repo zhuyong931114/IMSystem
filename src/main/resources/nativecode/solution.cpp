@@ -75,18 +75,10 @@ JNIEXPORT jstring JNICALL Java_com_huawei_kunpengimsystem_utils_NativeUtil_getCr
 JNIEXPORT jstring JNICALL Java_com_huawei_kunpengimsystem_utils_NativeUtil_getCpuClocks(JNIEnv *env, jobject obj)
 {
     uint64_t clocks;
-#ifdef __x86_64__
     uint32_t lo, hi;
     __asm__ __volatile__("rdtsc"
                          : "=a"(lo), "=d"(hi));
     clocks = (uint64_t)hi << 32 | lo;
-#elif defined __aarch64__
-    __asm__ __volatile__("mrs %0, cntvct_el0"
-                         : "=r"(clocks));
-    clocks = clocks * CPU_CURRENT / CPU_EXTERNAL_CLOCK;
-#else
-    clocks = clock() / CLOCKS_PER_SEC * CPU_CURRENT * RATIO_HMZ_TO_HZ;
-#endif
     std::string strClocks = std::to_string(clocks);
     return str2jstring(env, strClocks.c_str());
 }

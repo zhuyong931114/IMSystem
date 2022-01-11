@@ -24,9 +24,6 @@ endif()
 
 # detect the architecture of processor
 message("${CMAKE_HOST_SYSTEM_PROCESSOR} architecture detected")
-if(CMAKE_HOST_SYSTEM_PROCESSOR MATCHES "aarch64")
-    add_compile_options(-march=armv8-a+crc)
-endif()
 
 # target libxx.so
 add_library(MyJni SHARED ${SRC_LIST})
