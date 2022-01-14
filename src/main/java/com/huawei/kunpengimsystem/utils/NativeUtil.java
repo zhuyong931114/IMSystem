@@ -1,8 +1,16 @@
 package com.huawei.kunpengimsystem.utils;
 
 public class NativeUtil {
-    public native String getSha256Digest(String message);
-    public native String getCrc32Digest(String filePath);
-    public native String getCpuClocks();
-    
+    public String getSha256Digest(String message) {
+        return Clibrary.INSTANTCE.GetSha256Digest(message);
+    }
+
+    public String getCrc32Digest(String filePath) {
+        return Clibrary.INSTANTCE.GetCrc32Digest(filePath);
+    }
+
+    public String getCpuClocks() {
+        return Clibrary.INSTANTCE.GetCpuClocks();
+    }
+
 }

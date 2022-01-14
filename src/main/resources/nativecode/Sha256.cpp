@@ -75,12 +75,10 @@ bool Sha256::PreProcess(std::vector<uint8_t> &message) const
 		return false;
 	}
 
-	// ԭʼ��Ϣ�ֽڳ��ȣ�bit���ȣ�����0x80һ���ֽں�ĳ���
 	size_t originalByteLen = message.size();
 	message.push_back(0x80);
 	size_t addOneByteLen = originalByteLen + 1;
 
-	// ��Ҫ���ӵ�0x00�ֽڳ���
 	size_t zeroByteLen = (addOneByteLen % 64) / 57 * 64 + 56 - addOneByteLen % 64;
 	for (size_t i = 0; i < zeroByteLen; i++)
 	{
