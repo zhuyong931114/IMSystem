@@ -43,6 +43,6 @@ const char *GetCpuClocks(void)
 #else
     clocks = clock() / CLOCKS_PER_SEC * CPU_CURRENT * RATIO_HMZ_TO_HZ;
 #endif
-    std::string strClocks = std::to_string(clocks);
+    std::string strClocks = std::to_string(clocks);;
     return strClocks.c_str();
 }
