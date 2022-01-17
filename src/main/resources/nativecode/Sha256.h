@@ -23,7 +23,7 @@ protected:
 
 	bool PreProcess(std::vector < uint8_t>& message)const;
 
-	bool BlockTxtTo48Byte(const std::vector<uint8_t>& message,
+	bool BlockTxtTo64Byte(const std::vector<uint8_t>& message,
 		std::vector<std::vector<uint8_t>>& messageBlocks)const;
 
 	bool CalExtendedWords(const std::vector<uint8_t>& block, std::vector<uint32_t>& words)const;

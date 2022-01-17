@@ -37,14 +37,16 @@ std::string Sha256::GetHexMessageDiges(const std::string &message) const
 	}
 
 	std::vector<uint8_t> messageUint8;
+
 	for (const auto &it : message)
 	{
 		messageUint8.push_back(static_cast<uint8_t>(it));
 	}
+
 	assert(PreProcess(messageUint8));
 
 	std::vector<std::vector<uint8_t>> messageBlocks;
-	assert(BlockTxtTo48Byte(messageUint8, messageBlocks));
+	assert(BlockTxtTo64Byte(messageUint8, messageBlocks));
 
 	std::vector<uint32_t> messageDigestBit32(initConstantKey);
 	std::vector<uint32_t> extendedWord;
@@ -59,10 +61,11 @@ std::string Sha256::GetHexMessageDiges(const std::string &message) const
 	assert(TransferDigestBit32To8(messageDigestBit32, messageDigestBit8));
 
 	std::stringstream messageDigestStr;
-	messageDigestStr << std::hex << std::setiosflags(std::ios::uppercase);
 	for (const auto &it : messageDigestBit8)
 	{
-		messageDigestStr << static_cast<int>(it);
+		messageDigestStr << std::hex << std::setfill('0') << std::setw(2)
+						 << std::setiosflags(std::ios::uppercase)
+						 << static_cast<int>(it);
 	}
 
 	return messageDigestStr.str();
@@ -94,7 +97,7 @@ bool Sha256::PreProcess(std::vector<uint8_t> &message) const
 	return true;
 }
 
-bool Sha256::BlockTxtTo48Byte(const std::vector<uint8_t> &message,
+bool Sha256::BlockTxtTo64Byte(const std::vector<uint8_t> &message,
 							  std::vector<std::vector<uint8_t>> &messageBlocks) const
 {
 	if (message.size() % 64 != 0)

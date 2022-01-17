@@ -4,7 +4,6 @@
 
 #include <string>
 #include <cstdint>
-#include <iostream>
 #include <cstring>
 #include <ctime>
 
@@ -17,7 +16,11 @@ const char *GetSha256Digest(const char *jstr)
     static const Sha256 sha256;
     std::string message(jstr);
     std::string digest = sha256.GetHexMessageDiges(message);
-    return digest.c_str();
+
+    size_t jDigestLen = digest.size() + 1;
+    char *jDigest = new char[jDigestLen];
+    memcpy(jDigest, digest.c_str(), jDigestLen);
+    return jDigest;
 }
 
 const char *GetCrc32Digest(const char *jstr)
@@ -25,7 +28,11 @@ const char *GetCrc32Digest(const char *jstr)
     static FileCrc32 fileCrc32;
     std::string filePath(jstr);
     std::string crc = fileCrc32.GetFileCrc(filePath);
-    return crc.c_str();
+
+    size_t jCrcLen = crc.size() + 1;
+    char *jCrc = new char[jCrcLen];
+    memcpy(jCrc, crc.c_str(), jCrcLen);
+    return jCrc;
 }
 
 const char *GetCpuClocks(void)

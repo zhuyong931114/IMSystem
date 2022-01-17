@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.0.0)
 # project name and language
 project(MyJni LANGUAGES CXX)
 
@@ -18,11 +18,11 @@ if(CMAKE_HOST_SYSTEM_PROCESSOR MATCHES "aarch64")
     add_compile_options(-march=armv8-a+crc)
 endif()
 
-# target libxx.so
+# target libxx.sos
 add_library(MyJni SHARED ${SRC_LIST})
 
 #set install path libxx.so
-set(CMAKE_INSTALL_PREFIX /usr/local/)
+set(CMAKE_INSTALL_PREFIX /)
 install(TARGETS MyJni
-        LIBRARY DESTINATION mylib
+        LIBRARY DESTINATION lib64
        )

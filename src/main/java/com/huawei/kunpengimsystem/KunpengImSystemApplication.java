@@ -14,13 +14,6 @@ public class KunpengImSystemApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(KunpengImSystemApplication.class, args);
-
-		try {
-			System.load("/usr/local/mylib/libMyJni.so");
-		} catch (Exception e) {
-			System.out.print("file not found");
-			e.printStackTrace();
-		}
 	}
 
 }

@@ -69,7 +69,8 @@ std::string FileCrc32::GetFileCrc(const std::string &filePath)
 	inFile.close();
 
 	std::stringstream strCrc;
-	strCrc << std::hex << std::setiosflags(std::ios::uppercase);
-	strCrc << (crc ^ 0xffffffff);
+	strCrc << std::hex << std::setiosflags(std::ios::uppercase)
+		   << std::setfill('0')
+		   << (crc ^ 0xffffffff);
 	return strCrc.str();
 }
