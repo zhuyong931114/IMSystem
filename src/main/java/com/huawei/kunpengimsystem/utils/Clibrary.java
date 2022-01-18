@@ -8,7 +8,7 @@ import com.sun.jna.ptr.PointerByReference;
 
 public interface Clibrary extends Library {
 
-    Clibrary INSTANTCE = (Clibrary) Native.loadLibrary("Myjni", Clibrary.class);
+    Clibrary INSTANTCE = (Clibrary) Native.loadLibrary("MyJni", Clibrary.class);
 
     String GetSha256Digest(String jstr);
     String GetCrc32Digest(String jstr);

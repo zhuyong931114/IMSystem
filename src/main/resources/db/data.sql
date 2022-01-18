@@ -2,10 +2,10 @@ INSERT INTO `users`(`id`,`name`,`password`,`gender`,`signature`,`email`)
         VALUES (NULL,'Devkit','FD90A979478F2E1792FFFBD46AEC768F8D3E72E98D786A3C584943E9A07D3782','male','湖人总冠军','1111@qq.com');
 
 INSERT INTO `users`(`id`,`name`,`password`,`gender`,`signature`,`email`)
-        VALUES (NULL,'Kunpeng','85F5D124DEEC9EAB2B1847B5225E9C57123F4A211AB211F1378D63383CD28','female','东契奇yyds','2222@qq.com');
+        VALUES (NULL,'Kunpeng','85F5D124DEEC9EAB02B1847B52025E9C57123F4A211AB211F10378D63383CD28','female','东契奇yyds','2222@qq.com');
 
 INSERT INTO `users`(`id`,`name`,`password`,`gender`,`signature`,`email`)
-        VALUES (NULL,'Huawei','1C6731BB57CBF24C7DD9CEEAD46956BB578DF042F36E78CAD8791360F2B8','female','hhhhh','3333@qq.com');
+        VALUES (NULL,'Huawei','1C6731BB057CBF24C7DD9CEE0AD46956BB578DF0420F036E78CAD8791360F2B8','female','hhhhh','3333@qq.com');
 
 INSERT INTO `contacts`(`id`,`name`,`email`)
         VALUES (1,'Devkit','1111@qq.com');
