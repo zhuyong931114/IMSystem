@@ -3,20 +3,10 @@ cmake_minimum_required(VERSION 3.0.0)
 project(MyJni LANGUAGES CXX)
 
 # set source 
-set(SRC_LIST 
-Solution.cpp 
-Sha256.cpp 
-FileCrc32.cpp 
-Sha256.h 
-FileCrc32.h
-Solution.h
-)
+aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR} SRC_LIST)
 
 # detect the architecture of processor
 message("${CMAKE_HOST_SYSTEM_PROCESSOR} architecture detected")
-if(CMAKE_HOST_SYSTEM_PROCESSOR MATCHES "aarch64")
-    add_compile_options(-march=armv8-a+crc)
-endif()
 
 # target libxx.sos
 add_library(MyJni SHARED ${SRC_LIST})

@@ -16,4 +16,4 @@ const char *GetCpuClocks(void);
 }
 #endif
 
-#endif // SOLUTION_H_
+#endif // !SOLUTION_H_

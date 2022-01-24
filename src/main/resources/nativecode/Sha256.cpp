@@ -31,15 +31,13 @@ std::vector<uint32_t> Sha256::addConstantKey = {
 
 std::string Sha256::GetHexMessageDiges(const std::string &message) const
 {
-	if (message.empty())
-	{
+	if (message.empty()) {
 		return "";
 	}
 
 	std::vector<uint8_t> messageUint8;
 
-	for (const auto &it : message)
-	{
+	for (const auto &it : message) {
 		messageUint8.push_back(static_cast<uint8_t>(it));
 	}
 
@@ -51,8 +49,7 @@ std::string Sha256::GetHexMessageDiges(const std::string &message) const
 	std::vector<uint32_t> messageDigestBit32(initConstantKey);
 	std::vector<uint32_t> extendedWord;
 
-	for (const auto &block : messageBlocks)
-	{
+	for (const auto &block : messageBlocks) {
 		assert(CalExtendedWords(block, extendedWord));
 		assert(CalBlockDigest(extendedWord, messageDigestBit32));
 	}
@@ -61,8 +58,7 @@ std::string Sha256::GetHexMessageDiges(const std::string &message) const
 	assert(TransferDigestBit32To8(messageDigestBit32, messageDigestBit8));
 
 	std::stringstream messageDigestStr;
-	for (const auto &it : messageDigestBit8)
-	{
+	for (const auto &it : messageDigestBit8) {
 		messageDigestStr << std::hex << std::setfill('0') << std::setw(2)
 						 << std::setiosflags(std::ios::uppercase)
 						 << static_cast<int>(it);
@@ -73,8 +69,7 @@ std::string Sha256::GetHexMessageDiges(const std::string &message) const
 
 bool Sha256::PreProcess(std::vector<uint8_t> &message) const
 {
-	if (message.empty())
-	{
+	if (message.empty()) {
 		return false;
 	}
 
@@ -83,14 +78,12 @@ bool Sha256::PreProcess(std::vector<uint8_t> &message) const
 	size_t addOneByteLen = originalByteLen + 1;
 
 	size_t zeroByteLen = (addOneByteLen % 64) / 57 * 64 + 56 - addOneByteLen % 64;
-	for (size_t i = 0; i < zeroByteLen; i++)
-	{
+	for (size_t i = 0; i < zeroByteLen; i++) {
 		message.push_back(0x00);
 	}
 
 	uint64_t originalBitLen = static_cast<uint64_t>(originalByteLen) * 8;
-	for (int i = 1; i <= 8; i++)
-	{
+	for (int i = 1; i <= 8; i++) {
 		message.push_back(static_cast<uint8_t>(originalBitLen >> (64 - 8 * i)));
 	}
 
@@ -100,14 +93,12 @@ bool Sha256::PreProcess(std::vector<uint8_t> &message) const
 bool Sha256::BlockTxtTo64Byte(const std::vector<uint8_t> &message,
 							  std::vector<std::vector<uint8_t>> &messageBlocks) const
 {
-	if (message.size() % 64 != 0)
-	{
+	if (message.size() % 64 != 0) {
 		return false;
 	}
 
 	size_t loopNum = message.size() / 64;
-	for (size_t i = 0; i < loopNum; i++)
-	{
+	for (size_t i = 0; i < loopNum; i++) {
 		std::vector<uint8_t> temp(message.begin() + i * 64, message.begin() + (i + 1) * 64);
 		messageBlocks.emplace_back(temp);
 	}
@@ -117,23 +108,20 @@ bool Sha256::BlockTxtTo64Byte(const std::vector<uint8_t> &message,
 
 bool Sha256::CalExtendedWords(const std::vector<uint8_t> &block, std::vector<uint32_t> &words) const
 {
-	if (block.size() != 64)
-	{
+	if (block.size() != 64) {
 		return false;
 	}
 
 	words.resize(64);
 
-	for (int i = 0, j = 0; i < 16; i++, j += 4)
-	{
+	for (int i = 0, j = 0; i < 16; i++, j += 4) {
 		words[i] = static_cast<uint32_t>(block[j] << 24) |
 				   static_cast<uint32_t>(block[j + 1] << 16) |
 				   static_cast<uint32_t>(block[j + 2] << 8) |
 				   static_cast<uint32_t>(block[j + 3]);
 	}
 
-	for (int i = 16; i < 64; i++)
-	{
+	for (int i = 16; i < 64; i++) {
 		words[i] = SmallSegema1(words[i - 2]) + words[i - 7] + SmallSegema0(words[i - 15]) + words[i - 16];
 	}
 
@@ -143,14 +131,12 @@ bool Sha256::CalExtendedWords(const std::vector<uint8_t> &block, std::vector<uin
 bool Sha256::CalBlockDigest(const std::vector<uint32_t> &extendedWord,
 							std::vector<uint32_t> &messageDigest) const
 {
-	if (extendedWord.size() != 64 || messageDigest.size() != 8)
-	{
+	if (extendedWord.size() != 64 || messageDigest.size() != 8) {
 		return false;
 	}
 
 	auto tempDigest = messageDigest;
-	for (int i = 0; i < 64; i++)
-	{
+	for (int i = 0; i < 64; i++) {
 		uint32_t temp1 = tempDigest[7] + BigSegema1(tempDigest[4]) +
 						 Ch(tempDigest[4], tempDigest[5], tempDigest[6]) +
 						 addConstantKey[i] + extendedWord[i];
@@ -165,8 +151,7 @@ bool Sha256::CalBlockDigest(const std::vector<uint32_t> &extendedWord,
 		tempDigest[0] = temp1 + temp2;
 	}
 
-	for (int i = 0; i < 8; i++)
-	{
+	for (int i = 0; i < 8; i++) {
 		messageDigest[i] += tempDigest[i];
 	}
 
@@ -175,13 +160,11 @@ bool Sha256::CalBlockDigest(const std::vector<uint32_t> &extendedWord,
 
 bool Sha256::TransferDigestBit32To8(const std::vector<uint32_t> &digest32, std::vector<uint8_t> &digest8) const
 {
-	if (digest32.size() != 8 || digest8.size() != 32)
-	{
+	if (digest32.size() != 8 || digest8.size() != 32) {
 		return false;
 	}
 
-	for (int i = 0, j = 0; i < 8; i++)
-	{
+	for (int i = 0, j = 0; i < 8; i++) {
 		digest8[j++] = static_cast<uint8_t>(digest32[i] >> 24);
 		digest8[j++] = static_cast<uint8_t>(digest32[i] >> 16);
 		digest8[j++] = static_cast<uint8_t>(digest32[i] >> 8);

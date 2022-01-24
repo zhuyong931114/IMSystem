@@ -5,30 +5,21 @@
 #include <sstream>
 #include <iomanip>
 
-#ifndef __x86_64__
-#ifndef __aarch64__
+#if !defined(__x86_64__) && !defined(__aarch64__)
 bool FileCrc32::tableCreated = false;
-#endif
 #endif
 
 FileCrc32::FileCrc32()
 {
-#ifndef __x86_64__
-#ifndef __aarch64__
-	if (!FileCrc32::tableCreated)
-	{
+#if !defined(__x86_64__) && !defined(__aarch64__)
+	if (!FileCrc32::tableCreated) {
 		uint32_t crc;
-		for (int i = 0; i < 256; i++)
-		{
+		for (int i = 0; i < 256; i++) {
 			crc = i;
-			for (int j = 0; j < 8; j++)
-			{
-				if (crc & 1)
-				{
+			for (int j = 0; j < 8; j++) {
+				if (crc & 1) {
 					crc = (crc >> 1) ^ 0x82F63B78; // 多项式0x1EDC6F41
-				}
-				else
-				{
+				} else {
 					crc >>= 1;
 				}
 			}
@@ -36,7 +27,6 @@ FileCrc32::FileCrc32()
 		}
 		FileCrc32::tableCreated = true;
 	}
-#endif
 #endif
 }
 
@@ -60,8 +50,7 @@ std::string FileCrc32::GetFileCrc(const std::string &filePath)
 	fileLength += fileLength > 0 ? -1 : 0;
 #endif
 
-	for (int i = 1; i <= fileLength; i++)
-	{
+	for (int i = 1; i <= fileLength; i++) {
 		inFile >> unChar;
 		crc = Crc32_u8(crc, unChar);
 	}

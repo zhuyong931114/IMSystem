@@ -62,7 +62,7 @@ inline uint32_t Sha256::SmallSegema1(uint32_t x)const
 {
 	return (x >> 17 | x << 15) ^ (x >> 19 | x << 13) ^ (x >> 10);
 }
-#endif // SHA256_H_
+#endif // !SHA256_H_
 
 
 
