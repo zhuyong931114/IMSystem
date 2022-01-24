@@ -20,16 +20,7 @@
 
 <!--    补完createMessage-->
     <insert id="createMessage" parameterType="Message" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO `messages` (`conversation_id`,
-        `sender_id`,
-        `message_type`,
-        `message_context`,
-        `create_time`)
-        VALUES (#{message.conversationId},
-        #{message.senderId},
-        #{message.messageType},
-        #{message.messageContext},
-        #{message.createTime})
+
     </insert>
 
     <insert id="createMockMessage" parameterType="Message" useGeneratedKeys="true" keyProperty="id">
